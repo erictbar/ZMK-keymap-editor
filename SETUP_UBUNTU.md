@@ -23,6 +23,10 @@ npm install
 # 3. Copy environment file
 cp .env.production .env
 
+# 3.5. Create placeholder for private key (GitHub is disabled by default)
+# This prevents errors even though ENABLE_GITHUB=false
+touch private-key.pem
+
 # 4. Build the React app with correct PUBLIC_URL (if not already done)
 cd app
 PUBLIC_URL=/zmk npm run build
@@ -72,3 +76,5 @@ If the service fails to start, check:
 2. Port 8088 is available: `sudo netstat -tlnp | grep 8088`
 3. Permissions on /opt/ZMK-keymap-editor
 4. Service logs: `sudo journalctl -u zmk-keymap-editor -n 50`
+5. Missing private-key.pem: `touch /opt/ZMK-keymap-editor/private-key.pem` (if ENABLE_GITHUB=false)
+6. react-scripts permission denied: `cd /opt/ZMK-keymap-editor/app && chmod +x node_modules/.bin/*`
