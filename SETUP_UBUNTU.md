@@ -5,12 +5,19 @@
 Run these commands on your Ubuntu server:
 
 ```bash
-# 1. Copy the project to the server
-sudo mkdir -p /opt/ZMK-keymap-editor
-sudo cp -r /mnt/d/Developer/ZMK-keymap-editor/* /opt/ZMK-keymap-editor/
+# 1. Clone your fork to the server (recommended)
+cd /opt
+sudo git clone https://github.com/erictbar/ZMK-keymap-editor.git
+sudo chown -R $USER:$USER /opt/ZMK-keymap-editor
 cd /opt/ZMK-keymap-editor
 
-# 2. Install dependencies
+# OR if copying files:
+# sudo mkdir -p /opt/ZMK-keymap-editor
+# sudo cp -r /path/to/ZMK-keymap-editor/* /opt/ZMK-keymap-editor/
+# sudo chown -R $USER:$USER /opt/ZMK-keymap-editor
+# cd /opt/ZMK-keymap-editor
+
+# 2. Install dependencies (this will also install app dependencies)
 npm install
 
 # 3. Copy environment file
