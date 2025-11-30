@@ -27,9 +27,9 @@ cp .env.production .env
 # This prevents errors even though ENABLE_GITHUB=false
 touch private-key.pem
 
-# 4. Build the React app with correct PUBLIC_URL (if not already done)
+# 4. Build the React app with correct PUBLIC_URL and API_BASE_URL
 cd app
-PUBLIC_URL=/zmk npm run build
+REACT_APP_API_BASE_URL=https://sh.erictb.com/zmk REACT_APP_ENABLE_LOCAL=true PUBLIC_URL=/zmk npm run build
 cd ..
 
 # 5. Copy build files to web directory
