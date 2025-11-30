@@ -1,0 +1,29 @@
+    redir /zmk /zmk/
+    handle_path /zmk/* {
+        # API endpoints - these must come first before static file serving
+        handle /behaviors {
+            reverse_proxy localhost:8088
+        }
+        handle /keycodes {
+            reverse_proxy localhost:8088
+        }
+        handle /layout {
+            reverse_proxy localhost:8088
+        }
+        handle /keymap {
+            reverse_proxy localhost:8088
+        }
+        handle /health {
+            reverse_proxy localhost:8088
+        }
+        handle /github/* {
+            reverse_proxy localhost:8088
+        }
+        
+        # Serve static files for everything else
+        handle {
+            root * /opt/Homepage/zmk
+            try_files {path} /index.html
+            file_server
+        }
+    }

@@ -27,6 +27,13 @@ cp .env.production .env
 # This prevents errors even though ENABLE_GITHUB=false
 touch private-key.pem
 
+# 3.6. Clone your zmk-config repository (REQUIRED)
+# Option A: Clone your own zmk-config repo
+# git clone https://github.com/YOUR_USERNAME/YOUR_ZMK_CONFIG.git zmk-config
+# 
+# Option B: Use the demo repo for testing
+git clone https://github.com/nickcoutsos/zmk-config-corne-demo.git zmk-config
+
 # 4. Build the React app with correct PUBLIC_URL and API_BASE_URL
 cd app
 REACT_APP_API_BASE_URL=https://sh.erictb.com/zmk REACT_APP_ENABLE_LOCAL=true PUBLIC_URL=/zmk npm run build
@@ -68,6 +75,47 @@ sudo systemctl disable zmk-keymap-editor
 ## Port Configuration
 - Backend API: Port 8088
 - Web URL: https://sh.erictb.com/zmk/
+
+## Caddy Configuration
+
+Add this to your Caddyfile (replace the existing /zmk section):
+
+```
+    redir /zmk /zmk/
+    handle_path /zmk/* {
+        # API endpoints - these must come first before static file serving
+        handle /behaviors {
+            reverse_proxy localhost:8088
+        }
+        handle /keycodes {
+            reverse_proxy localhost:8088
+        }
+        handle /layout {
+            reverse_proxy localhost:8088
+        }
+        handle /keymap {
+            reverse_proxy localhost:8088
+        }
+        handle /health {
+            reverse_proxy localhost:8088
+        }
+        handle /github/* {
+            reverse_proxy localhost:8088
+        }
+        
+        # Serve static files for everything else
+        handle {
+            root * /opt/Homepage/zmk
+            try_files {path} /index.html
+            file_server
+        }
+    }
+```
+
+After updating the Caddyfile, reload Caddy:
+```bash
+sudo caddy reload --config /opt/caddy/Caddyfile.txt
+```
 
 ## Troubleshooting
 
