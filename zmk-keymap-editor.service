@@ -1,0 +1,20 @@
+[Unit]
+Description=ZMK Keymap Editor API Server
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+WorkingDirectory=/opt/ZMK-keymap-editor
+Environment="NODE_ENV=production"
+Environment="PORT=8088"
+Environment="APP_BASE_URL=https://sh.erictb.com/zmk"
+ExecStart=/usr/bin/node index.js
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=zmk-keymap-editor
+
+[Install]
+WantedBy=multi-user.target
