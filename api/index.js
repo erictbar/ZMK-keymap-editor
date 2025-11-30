@@ -9,7 +9,15 @@ const keyboards = require('./routes/keyboards')
 
 const app = express()
 
-const { origin } = new URL(config.APP_BASE_URL)
+// Extract origin from APP_BASE_URL for CORS
+let origin = '*'
+try {
+  const appUrl = new URL(config.APP_BASE_URL)
+  origin = appUrl.origin
+} catch (err) {
+  console.error('Failed to parse APP_BASE_URL for CORS:', err.message)
+  console.error('Using wildcard CORS instead')
+}
 
 app.use(bodyParser.json())
 app.use(cors({ origin }))
