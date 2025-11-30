@@ -2,8 +2,8 @@ const process = require('process')
 require('dotenv/config')
 
 const PORT = process.env.PORT || 8080
-const ENABLE_DEV_SERVER = process.env.ENABLE_DEV_SERVER
-const ENABLE_GITHUB = process.env.ENABLE_GITHUB
+const ENABLE_DEV_SERVER = process.env.ENABLE_DEV_SERVER === 'true'
+const ENABLE_GITHUB = process.env.ENABLE_GITHUB === 'true'
 const GITHUB_APP_NAME = process.env.GITHUB_APP_NAME
 const GITHUB_APP_PRIVATE_KEY = process.env.GITHUB_APP_PRIVATE_KEY
 const GITHUB_APP_ID = process.env.GITHUB_APP_ID
